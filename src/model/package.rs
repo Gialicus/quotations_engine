@@ -10,6 +10,13 @@ pub struct Package {
 }
 
 impl Package {
+    pub fn new(kind: String, rules: Vec<Rule>, purchasables: Vec<Purchasable>) -> Self {
+        Self {
+            kind,
+            rules,
+            purchasables,
+        }
+    }
     pub fn add_purchasable(&mut self, purchasable: Purchasable) {
         self.purchasables.push(purchasable)
     }
