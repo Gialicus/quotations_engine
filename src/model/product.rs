@@ -22,15 +22,26 @@ pub enum MassType {
     Milligram,
 }
 
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub enum TimeType {
+    Second,
+    Minute,
+    Hour,
+    Day,
+    Month,
+    Year,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Um {
-    Lenght((LenghtType, f32)),
-    Area((LenghtType, (f32, f32))),
-    Footprint((LenghtType, (f32, f32, f32))),
-    Volume((VolumeType, (f32, f32, f32))),
-    Mass((MassType, f32)),
-    Time,
+    Lenght((LenghtType, f64)),
+    Area((LenghtType, (f64, f64))),
+    Footprint((LenghtType, (f64, f64, f64))),
+    Volume((VolumeType, (f64, f64, f64))),
+    Mass((MassType, f64)),
+    Time(TimeType, f64),
 }
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Product {
     pub id: String,
