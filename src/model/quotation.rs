@@ -1,7 +1,4 @@
-use super::{
-    product::{LenghtType, Product, Um},
-    purchasable::Purchasable,
-};
+use super::purchasable::Purchasable;
 
 #[derive(Debug, Clone)]
 pub struct Quotation {
@@ -35,7 +32,12 @@ impl Quotation {
 
 #[cfg(test)]
 mod tests {
-    use super::*; // Importa le funzioni e le strutture dalla mod principale
+    use crate::model::product::LenghtType;
+    use crate::model::product::Product;
+    use crate::model::product::Um;
+    use crate::model::purchasable::Purchasable;
+
+    use super::Quotation;
 
     fn mock_quotations() -> Quotation {
         let p = Product::new(

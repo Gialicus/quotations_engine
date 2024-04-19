@@ -1,5 +1,4 @@
-use super::product::{LenghtType, Product, Um};
-
+use super::product::Product;
 #[derive(Debug, Clone)]
 pub struct Purchasable {
     pub product: Product,
@@ -43,6 +42,9 @@ impl Purchasable {
 
 #[test]
 fn create_purchasable() {
+    use crate::model::product::LenghtType;
+    use crate::model::product::Um;
+
     let p: Product = Product::new(
         "0".into(),
         "cavi usb rame x5 Gialix".into(),
