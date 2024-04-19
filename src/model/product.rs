@@ -35,13 +35,13 @@ pub enum Um {
 pub struct Product {
     pub id: String,
     pub name: String,
-    pub package_quantity: f32,
+    pub package_quantity: f64,
     pub um: Um,
-    pub unit_price: f32,
+    pub unit_price: f64,
 }
 
 impl Product {
-    pub fn new(id: &str, name: &str, package_quantity: f32, um: Um, unit_price: f32) -> Self {
+    pub fn new(id: &str, name: &str, package_quantity: f64, um: Um, unit_price: f64) -> Self {
         Product {
             id: id.into(),
             name: name.into(),
@@ -50,7 +50,7 @@ impl Product {
             unit_price,
         }
     }
-    pub fn package_price(&self) -> f32 {
+    pub fn package_price(&self) -> f64 {
         self.unit_price * self.package_quantity
     }
 }
