@@ -1,18 +1,20 @@
-#[derive(Debug, Clone)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum LenghtType {
     Meter,
     Centimeter,
     Millimeter,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum VolumeType {
     Liter,
     Centiliter,
     Milliliter,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum MassType {
     Kilogram,
     Gram,
@@ -20,15 +22,16 @@ pub enum MassType {
     Milligram,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Um {
     Lenght((LenghtType, f32)),
     Area((LenghtType, (f32, f32))),
+    Footprint((LenghtType, (f32, f32, f32))),
     Volume((VolumeType, (f32, f32, f32))),
     Mass((MassType, f32)),
     Time,
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Product {
     pub id: String,
     pub name: String,
@@ -47,7 +50,7 @@ impl Product {
             unit_price,
         }
     }
-    pub fn price_list(&self) -> f32 {
+    pub fn package_price(&self) -> f32 {
         self.unit_price * self.package_quantity
     }
 }
@@ -62,5 +65,5 @@ fn create_product() {
         10.0,
     );
     assert_eq!("0", p.id);
-    assert_eq!(50.0, p.price_list())
+    assert_eq!(50.0, p.package_price())
 }
