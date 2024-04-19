@@ -106,9 +106,26 @@ mod purchasable_test {
     }
 
     #[test]
-    fn test_min_rule() {
+    fn test_min_price_rule() {
         let mut pu: Purchasable = mock_purchasable();
         pu.apply_rule(Rule::MinPrice(10.0));
         assert_eq!(pu.validate(), Ok(()))
+    }
+    #[test]
+    fn test_max_price_rule() {
+        let mut pu: Purchasable = mock_purchasable();
+        pu.apply_rule(Rule::MaxPrice(1000.0));
+        assert_eq!(pu.validate(), Ok(()))
+    }
+    #[test]
+    fn test_failing_rules() {
+        let mut pu: Purchasable = mock_purchasable();
+        pu.apply_rule(Rule::MaxPrice(10.0));
+        pu.apply_rule(Rule::MinPrice(1000.0));
+        let res = pu.validate();
+        assert_eq!(
+            res,
+            Err("MaxPrice not exausted\nMinPrice not exausted".to_string())
+        )
     }
 }
