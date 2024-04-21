@@ -26,16 +26,8 @@ impl Product {
 
 #[test]
 fn create_product() {
-    use crate::model::unit::Lenght;
-    use crate::model::unit::LenghtType;
-
-    let p: Product = Product::new(
-        "0".into(),
-        "cavi usb rame x5 Gialix".into(),
-        5.0,
-        UnitOfMeasure::Lenght(Lenght::new(LenghtType::Meter, 3.0)),
-        10.0,
-    );
+    use crate::utils::mock::mock_product;
+    let p: Product = mock_product();
     assert_eq!("0", p.id);
     assert_eq!(2.0, p.unit_price())
 }

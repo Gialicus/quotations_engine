@@ -43,23 +43,7 @@ impl Purchasable {
 
 #[cfg(test)]
 mod purchasable_test {
-    use crate::model::{
-        product::Product,
-        purchasable::Purchasable,
-        unit::{Lenght, LenghtType, UnitOfMeasure},
-    };
-
-    fn mock_purchasable() -> Purchasable {
-        let p: Product = Product::new(
-            "0".into(),
-            "cavi usb rame x5 Gialix".into(),
-            5.0,
-            UnitOfMeasure::Lenght(Lenght::new(LenghtType::Centimeter, 15.0)),
-            10.0,
-        );
-        let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2));
-        pu
-    }
+    use crate::{model::purchasable::Purchasable, utils::mock::mock_purchasable};
 
     #[test]
     fn test_totals() {
