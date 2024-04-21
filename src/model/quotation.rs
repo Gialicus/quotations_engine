@@ -54,20 +54,19 @@ impl Quotation {
 
 #[cfg(test)]
 mod quotation_test {
-    use crate::model::product::LenghtType;
     use crate::model::product::Product;
-    use crate::model::product::Um;
     use crate::model::purchasable::Purchasable;
+    use crate::model::unit::{LenghtType, UnitOfMeasure};
 
     use super::Quotation;
 
     fn mock_quotations() -> Quotation {
-        // 20
+        // 4
         let p = Product::new(
             "0",
             "piastrelle di ceramica",
             10.0,
-            Um::Lenght((LenghtType::Centimeter, 10.0)),
+            UnitOfMeasure::Lenght((LenghtType::Centimeter, 10.0)),
             2.0,
         );
         // 100
@@ -75,7 +74,7 @@ mod quotation_test {
             "1",
             "box doccia",
             1.0,
-            Um::Area((LenghtType::Centimeter, (90.0, 90.0))),
+            UnitOfMeasure::Area((LenghtType::Centimeter, (90.0, 90.0))),
             100.0,
         );
         // 100
@@ -83,15 +82,15 @@ mod quotation_test {
             "2",
             "rubinetti vintage",
             4.0,
-            Um::Footprint((LenghtType::Centimeter, (10.0, 10.0, 10.0))),
+            UnitOfMeasure::Footprint((LenghtType::Centimeter, (10.0, 10.0, 10.0))),
             25.0,
         );
-        //32 = 40 * 0.8
+        //3.2 = 4.0 * 0.8
         let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2), None);
         //80 = 100 * 0.8
         let pu2: Purchasable = Purchasable::new(p2, 5, 1, Some(0.2), None);
-        //160 = 200 * 0.8
-        let pu3: Purchasable = Purchasable::new(p3, 5, 2, Some(0.2), None);
+        //80 = 100 * 0.8
+        let pu3: Purchasable = Purchasable::new(p3, 5, 4, Some(0.2), None);
         let mut quo: Quotation = Quotation::new("0");
         quo.add_item(pu);
         quo.add_item(pu2);
@@ -102,29 +101,31 @@ mod quotation_test {
     #[test]
     fn quotation_total_price() {
         let q = mock_quotations();
-        assert_eq!(q.total_price(), 340.0);
+        assert_eq!(q.total_price(), 204.0);
     }
     #[test]
     fn quotation_total_discounted() {
         let q = mock_quotations();
-        assert_eq!(q.total_discounted(), 272.0);
+        assert_eq!(q.total_discounted(), 163.2);
     }
     #[test]
     fn quotation_final_total_discount() {
         let q = mock_quotations();
-        assert_eq!(q.apply_final_discount(Some(0.5)), 136.0);
+        assert_eq!(q.apply_final_discount(Some(0.5)), 81.6);
     }
     #[test]
     fn quotation_total_quantity() {
         let q = mock_quotations();
-        assert_eq!(q.total_quantity(), 29.0);
+        assert_eq!(q.total_quantity(), 37.0);
     }
     #[test]
     fn test_to_json() {
         let q = mock_quotations();
+        let json = 
+        "{\"id\":\"0\",\"purchasables\":[{\"product\":{\"id\":\"0\",\"name\":\"piastrelle di ceramica\",\"package_quantity\":10.0,\"um\":{\"Lenght\":[\"Centimeter\",10.0]},\"price\":2.0},\"lead_time\":5,\"required_amount\":2,\"rules\":[],\"discount\":0.2},{\"product\":{\"id\":\"1\",\"name\":\"box doccia\",\"package_quantity\":1.0,\"um\":{\"Area\":[\"Centimeter\",[90.0,90.0]]},\"price\":100.0},\"lead_time\":5,\"required_amount\":1,\"rules\":[],\"discount\":0.2},{\"product\":{\"id\":\"2\",\"name\":\"rubinetti vintage\",\"package_quantity\":4.0,\"um\":{\"Footprint\":[\"Centimeter\",[10.0,10.0,10.0]]},\"price\":25.0},\"lead_time\":5,\"required_amount\":4,\"rules\":[],\"discount\":0.2}]}";
         assert_eq!(
             q.to_json(),
-            "{\"id\":\"0\",\"purchasables\":[{\"product\":{\"id\":\"0\",\"name\":\"piastrelle di ceramica\",\"package_quantity\":10.0,\"um\":{\"Lenght\":[\"Centimeter\",10.0]},\"unit_price\":2.0},\"lead_time\":5,\"required_amount\":2,\"rules\":[],\"discount\":0.2},{\"product\":{\"id\":\"1\",\"name\":\"box doccia\",\"package_quantity\":1.0,\"um\":{\"Area\":[\"Centimeter\",[90.0,90.0]]},\"unit_price\":100.0},\"lead_time\":5,\"required_amount\":1,\"rules\":[],\"discount\":0.2},{\"product\":{\"id\":\"2\",\"name\":\"rubinetti vintage\",\"package_quantity\":4.0,\"um\":{\"Footprint\":[\"Centimeter\",[10.0,10.0,10.0]]},\"unit_price\":25.0},\"lead_time\":5,\"required_amount\":2,\"rules\":[],\"discount\":0.2}]}"
+            json
         );
     }
 }

@@ -32,7 +32,7 @@ impl Purchasable {
     }
 
     pub fn total_price(&self) -> f64 {
-        self.required_amount as f64 * self.product.package_price()
+        self.required_amount as f64 * self.product.price
     }
 
     pub fn total_discounted(&self) -> f64 {
@@ -50,12 +50,12 @@ impl Purchasable {
         for rule in self.rules.clone() {
             match rule {
                 Rule::MinPrice(price) => {
-                    if self.product.package_price() <= price {
+                    if self.total_price() <= price {
                         validators.push("MinPrice not exausted".to_string())
                     }
                 }
                 Rule::MaxPrice(price) => {
-                    if self.product.package_price() >= price {
+                    if self.total_price() >= price {
                         validators.push("MaxPrice not exausted".to_string())
                     }
                 }
@@ -81,16 +81,19 @@ impl Purchasable {
 
 #[cfg(test)]
 mod purchasable_test {
-    use crate::model::{product::Product, purchasable::Purchasable, rule::Rule};
+    use crate::model::{
+        product::Product,
+        purchasable::Purchasable,
+        rule::Rule,
+        unit::{LenghtType, UnitOfMeasure},
+    };
 
     fn mock_purchasable() -> Purchasable {
-        use crate::model::product::LenghtType;
-        use crate::model::product::Um;
         let p: Product = Product::new(
             "0".into(),
             "cavi usb rame x5 Gialix".into(),
             5.0,
-            Um::Lenght((LenghtType::Meter, 3.0)),
+            UnitOfMeasure::Lenght((LenghtType::Meter, 3.0)),
             10.0,
         );
         let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2), None);
@@ -101,8 +104,8 @@ mod purchasable_test {
     fn test_totals() {
         let pu: Purchasable = mock_purchasable();
         assert_eq!(pu.total_package_quantity(), 10.0);
-        assert_eq!(pu.total_price(), 100.0);
-        assert_eq!(pu.total_discounted(), 80.0);
+        assert_eq!(pu.total_price(), 20.0);
+        assert_eq!(pu.total_discounted(), 16.0);
     }
 
     #[test]
