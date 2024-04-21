@@ -33,10 +33,7 @@ fn create_product() {
         "0".into(),
         "cavi usb rame x5 Gialix".into(),
         5.0,
-        UnitOfMeasure::Lenght(Lenght {
-            lenght: 30.0,
-            uom: LenghtType::Centimeter,
-        }),
+        UnitOfMeasure::Lenght(Lenght::new(LenghtType::Meter, 3.0)),
         10.0,
     );
     assert_eq!("0", p.id);

@@ -66,7 +66,7 @@ mod quotation_test {
             "0",
             "piastrelle di ceramica",
             10.0,
-            UnitOfMeasure::Area(Area {uom:LenghtType::Centimeter, x: 10.0 , y: 10.0 }),
+            UnitOfMeasure::Area(Area::new(LenghtType::Centimeter, 10.0, 10.0)),
             2.0,
         );
         // 100
@@ -74,7 +74,7 @@ mod quotation_test {
             "1",
             "box doccia",
             1.0,
-            UnitOfMeasure::Area(Area {uom:LenghtType::Centimeter, x: 100.0 , y: 100.0 }),
+            UnitOfMeasure::Area(Area::new(LenghtType::Centimeter, 100.0, 100.0)),
             100.0,
         );
         // 100
@@ -82,7 +82,7 @@ mod quotation_test {
             "2",
             "rubinetti vintage",
             4.0,
-            UnitOfMeasure::Footprint(Footprint {uom:LenghtType::Centimeter, x: 10.0, y: 25.0, z:5.0}),
+            UnitOfMeasure::Footprint(Footprint::new(LenghtType::Centimeter, 10., 25.0, 5.0)),
             25.0,
         );
         //3.2 = 4.0 * 0.8

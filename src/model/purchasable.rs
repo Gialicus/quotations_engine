@@ -93,10 +93,7 @@ mod purchasable_test {
             "0".into(),
             "cavi usb rame x5 Gialix".into(),
             5.0,
-            UnitOfMeasure::Lenght(Lenght {
-                lenght: 30.0,
-                uom: LenghtType::Centimeter,
-            }),
+            UnitOfMeasure::Lenght(Lenght::new(LenghtType::Centimeter, 15.0)),
             10.0,
         );
         let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2), None);

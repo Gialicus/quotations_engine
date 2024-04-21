@@ -71,6 +71,42 @@ pub struct Time {
     pub value: f64,
 }
 
+impl Lenght {
+    pub fn new(uom: LenghtType, lenght: f64) -> Self {
+        Lenght { uom, lenght }
+    }
+}
+
+impl Area {
+    pub fn new(uom: LenghtType, x: f64, y: f64) -> Self {
+        Area { uom, x, y }
+    }
+}
+
+impl Footprint {
+    pub fn new(uom: LenghtType, x: f64, y: f64, z: f64) -> Self {
+        Footprint { uom, x, y, z }
+    }
+}
+
+impl Volume {
+    pub fn new(uom: VolumeType, liter: f64) -> Self {
+        Volume { uom, liter }
+    }
+}
+
+impl Mass {
+    pub fn new(uom: MassType, weight: f64) -> Self {
+        Mass { uom, weight }
+    }
+}
+
+impl Time {
+    pub fn new(uom: TimeType, value: f64) -> Self {
+        Time { uom, value }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum UnitOfMeasure {
     Lenght(Lenght),
