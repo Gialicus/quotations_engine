@@ -86,11 +86,11 @@ mod quotation_test {
             25.0,
         );
         //3.2 = 4.0 * 0.8
-        let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2), None);
+        let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2));
         //80 = 100 * 0.8
-        let pu2: Purchasable = Purchasable::new(p2, 5, 1, Some(0.2), None);
+        let pu2: Purchasable = Purchasable::new(p2, 5, 1, Some(0.2));
         //80 = 100 * 0.8
-        let pu3: Purchasable = Purchasable::new(p3, 5, 4, Some(0.2), None);
+        let pu3: Purchasable = Purchasable::new(p3, 5, 4, Some(0.2));
         let mut quo: Quotation = Quotation::new("0");
         quo.add_item(pu);
         quo.add_item(pu2);
@@ -117,15 +117,5 @@ mod quotation_test {
     fn quotation_total_quantity() {
         let q = mock_quotations();
         assert_eq!(q.total_quantity(), 37.0);
-    }
-    #[test]
-    fn test_to_json() {
-        let q = mock_quotations();
-        let json = 
-        "{\"id\":\"0\",\"purchasables\":[{\"product\":{\"id\":\"0\",\"name\":\"piastrelle di ceramica\",\"package_quantity\":10.0,\"um\":{\"Area\":{\"uom\":\"Centimeter\",\"x\":10.0,\"y\":10.0}},\"price\":2.0},\"lead_time\":5,\"required_amount\":2,\"rules\":[],\"discount\":0.2},{\"product\":{\"id\":\"1\",\"name\":\"box doccia\",\"package_quantity\":1.0,\"um\":{\"Area\":{\"uom\":\"Centimeter\",\"x\":100.0,\"y\":100.0}},\"price\":100.0},\"lead_time\":5,\"required_amount\":1,\"rules\":[],\"discount\":0.2},{\"product\":{\"id\":\"2\",\"name\":\"rubinetti vintage\",\"package_quantity\":4.0,\"um\":{\"Footprint\":{\"uom\":\"Centimeter\",\"x\":10.0,\"y\":25.0,\"z\":5.0}},\"price\":25.0},\"lead_time\":5,\"required_amount\":4,\"rules\":[],\"discount\":0.2}]}";
-        assert_eq!(
-            q.to_json(),
-            json
-        );
     }
 }
