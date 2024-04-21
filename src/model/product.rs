@@ -26,12 +26,17 @@ impl Product {
 
 #[test]
 fn create_product() {
+    use crate::model::unit::Lenght;
     use crate::model::unit::LenghtType;
+
     let p: Product = Product::new(
         "0".into(),
         "cavi usb rame x5 Gialix".into(),
         5.0,
-        UnitOfMeasure::Lenght((LenghtType::Meter, 3.0)),
+        UnitOfMeasure::Lenght(Lenght {
+            lenght: 30.0,
+            uom: LenghtType::Centimeter,
+        }),
         10.0,
     );
     assert_eq!("0", p.id);

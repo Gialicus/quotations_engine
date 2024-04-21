@@ -33,11 +33,50 @@ pub enum TimeType {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Lenght {
+    pub uom: LenghtType,
+    pub lenght: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Area {
+    pub uom: LenghtType,
+    pub x: f64,
+    pub y: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Footprint {
+    pub uom: LenghtType,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Volume {
+    pub uom: VolumeType,
+    pub liter: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Mass {
+    pub uom: MassType,
+    pub weight: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Time {
+    pub uom: TimeType,
+    pub value: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum UnitOfMeasure {
-    Lenght((LenghtType, f64)),
-    Area((LenghtType, (f64, f64))),
-    Footprint((LenghtType, (f64, f64, f64))),
-    Volume((VolumeType, (f64, f64, f64))),
-    Mass((MassType, f64)),
-    Time(TimeType, f64),
+    Lenght(Lenght),
+    Area(Area),
+    Footprint(Footprint),
+    Volume(Volume),
+    Mass(Mass),
+    Time(Time),
 }

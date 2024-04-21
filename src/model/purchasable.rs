@@ -85,7 +85,7 @@ mod purchasable_test {
         product::Product,
         purchasable::Purchasable,
         rule::Rule,
-        unit::{LenghtType, UnitOfMeasure},
+        unit::{Lenght, LenghtType, UnitOfMeasure},
     };
 
     fn mock_purchasable() -> Purchasable {
@@ -93,7 +93,10 @@ mod purchasable_test {
             "0".into(),
             "cavi usb rame x5 Gialix".into(),
             5.0,
-            UnitOfMeasure::Lenght((LenghtType::Meter, 3.0)),
+            UnitOfMeasure::Lenght(Lenght {
+                lenght: 30.0,
+                uom: LenghtType::Centimeter,
+            }),
             10.0,
         );
         let pu: Purchasable = Purchasable::new(p, 5, 2, Some(0.2), None);
