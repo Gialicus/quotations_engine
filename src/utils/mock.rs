@@ -1,4 +1,3 @@
-use crate::model::engine::Engine;
 use crate::model::product::Product;
 use crate::model::purchasable::Purchasable;
 use crate::model::quotation::Quotation;
@@ -7,9 +6,6 @@ use crate::model::unit::Footprint;
 use crate::model::unit::Lenght;
 use crate::model::unit::LenghtType;
 use crate::model::unit::UnitOfMeasure;
-use crate::rules::max_quantity::MaxQuantity;
-use crate::rules::min_quantity::MinQuantity;
-use crate::rules::rule::QuotationRuleType;
 
 pub fn mock_product() -> Product {
     let p: Product = Product::new(
@@ -70,14 +66,4 @@ pub fn mock_quotation() -> Quotation {
     quo.add_item(pu2);
     quo.add_item(pu3);
     quo
-}
-
-pub fn mock_engine() -> Engine {
-    Engine::new(
-        mock_quotation(),
-        vec![
-            QuotationRuleType::MinQuantity(MinQuantity { quantity: 3 }),
-            QuotationRuleType::MaxQuantity(MaxQuantity { quantity: 5 }),
-        ],
-    )
 }
