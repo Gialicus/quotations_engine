@@ -17,7 +17,7 @@ impl Engine {
     pub fn validate(&self) -> Result<(), Validators> {
         let mut validators = Validators::new();
         for rule in &self.rules {
-            let rule_result = rule.apply_quotation_rule(&self.quotation);
+            let rule_result = rule.apply(&self.quotation);
             match rule_result {
                 Ok(()) => continue,
                 Err(inner_validators) => validators.stack.extend(inner_validators.stack),

@@ -10,7 +10,7 @@ pub struct MinPrice {
 }
 
 impl QuotationRule for MinPrice {
-    fn apply_quotation_rule(&self, quotation: &Quotation) -> Result<(), Validators> {
+    fn apply(&self, quotation: &Quotation) -> Result<(), Validators> {
         let mut validators = Validators::new();
         for purchasable in &quotation.purchasables {
             if purchasable.total_price() < self.price {

@@ -10,7 +10,7 @@ pub struct MaxQuantity {
 }
 
 impl QuotationRule for MaxQuantity {
-    fn apply_quotation_rule(&self, quotation: &Quotation) -> Result<(), Validators> {
+    fn apply(&self, quotation: &Quotation) -> Result<(), Validators> {
         let mut validators = Validators::new();
         for purchasable in &quotation.purchasables {
             if purchasable.required_amount > self.quantity {
