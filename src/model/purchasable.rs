@@ -54,6 +54,27 @@ impl Purchasable {
         base
     }
 }
+
+impl From<(Product, Price)> for Purchasable {
+    fn from(value: (Product, Price)) -> Self {
+        Self {
+            product: value.0,
+            price: value.1,
+            required_amount: 1,
+            rules: Vec::new(),
+        }
+    }
+}
+impl From<(Product, Price, u32)> for Purchasable {
+    fn from(value: (Product, Price, u32)) -> Self {
+        Self {
+            product: value.0,
+            price: value.1,
+            required_amount: value.2,
+            rules: Vec::new(),
+        }
+    }
+}
 #[cfg(test)]
 mod purchasable_test {
     use crate::{
