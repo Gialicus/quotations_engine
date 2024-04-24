@@ -1,26 +1,19 @@
 use serde::{Deserialize, Serialize};
 
-use super::product::Product;
+use super::{price::Price, product::Product};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Purchasable {
     pub product: Product,
-    pub lead_time: u32,
+    pub price: Price,
     pub required_amount: u32,
-    pub discount: Option<f64>,
 }
 
 impl Purchasable {
-    pub fn new(
-        product: Product,
-        lead_time: u32,
-        required_amount: u32,
-        discount: Option<f64>,
-    ) -> Self {
+    pub fn new(product: Product, price: Price, required_amount: u32) -> Self {
         Purchasable {
             product,
-            lead_time,
+            price,
             required_amount,
-            discount,
         }
     }
     ///required_amount * product.package_quantity
@@ -29,15 +22,12 @@ impl Purchasable {
     }
 
     pub fn total_price(&self) -> f64 {
-        self.required_amount as f64 * self.product.price
+        self.required_amount as f64 * self.price.price
     }
 
     pub fn total_discounted(&self) -> f64 {
         let total_price = self.total_price();
-        match self.discount {
-            Some(d) => total_price * (1.0 - d),
-            None => total_price,
-        }
+        total_price * (1.0 - self.price.discount)
     }
 }
 
@@ -50,6 +40,6 @@ mod purchasable_test {
         let pu: Purchasable = mock_purchasable();
         assert_eq!(pu.total_package_quantity(), 10.0);
         assert_eq!(pu.total_price(), 20.0);
-        assert_eq!(pu.total_discounted(), 16.0);
+        assert_eq!(pu.total_discounted(), 10.0);
     }
 }

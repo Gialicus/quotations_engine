@@ -59,17 +59,17 @@ mod quotation_test {
     #[test]
     fn quotation_total_price() {
         let q = mock_quotation();
-        assert_eq!(q.total_price(), 204.0);
+        assert_eq!(q.total_price(), 440.0);
     }
     #[test]
     fn quotation_total_discounted() {
         let q = mock_quotation();
-        assert_eq!(q.total_discounted(), 163.2);
+        assert_eq!(q.total_discounted(), 220.0);
     }
     #[test]
     fn quotation_final_total_discount() {
         let q = mock_quotation();
-        assert_eq!(q.apply_final_discount(Some(0.5)), 81.6);
+        assert_eq!(q.apply_final_discount(Some(0.5)), 110.0);
     }
     #[test]
     fn quotation_total_quantity() {
