@@ -27,7 +27,7 @@ pub fn mock_purchasable() -> Purchasable {
     );
     let price = Price::new(10.0, 0.5, 0);
     //20 /S 10
-    let pu: Purchasable = Purchasable::new(p, price, 2);
+    let pu: Purchasable = Purchasable::new(p, price, 2, Vec::new());
     pu
 }
 
@@ -51,11 +51,11 @@ pub fn mock_quotation() -> Quotation {
         UnitOfMeasure::Footprint(Footprint::new(LenghtType::Centimeter, 10., 25.0, 5.0)),
     );
     //40 /S 20
-    let pu: Purchasable = Purchasable::new(p, Price::new(20.0, 0.5, 0), 2);
+    let pu: Purchasable = Purchasable::new(p, Price::new(20.0, 0.5, 0), 2, Vec::new());
     //200 /S 100
-    let pu2: Purchasable = Purchasable::new(p2, Price::new(200.0, 0.5, 0), 1);
+    let pu2: Purchasable = Purchasable::new(p2, Price::new(200.0, 0.5, 0), 1, Vec::new());
     //200 /S 100
-    let pu3: Purchasable = Purchasable::new(p3, Price::new(50.0, 0.5, 0), 4);
+    let pu3: Purchasable = Purchasable::new(p3, Price::new(50.0, 0.5, 0), 4, Vec::new());
     let mut quo: Quotation = Quotation::new("0");
     quo.add_item(pu);
     quo.add_item(pu2);
