@@ -21,8 +21,8 @@ impl Rule for MaxPrice {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.price.price > self.value {
             return Validator::from(format!(
-                "MaxPrice fail:\n\t({},{})",
-                purchasable.product.id, purchasable.product.name
+                "MaxPrice[{}]: Expect({}), Got({})",
+                purchasable.product.id, self.value, purchasable.price.price
             ));
         }
         Validator::new()
@@ -44,8 +44,8 @@ impl Rule for MinPrice {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.price.price < self.value {
             return Validator::from(format!(
-                "MinPrice fail:\n\t({},{})",
-                purchasable.product.id, purchasable.product.name
+                "MinPrice[{}]: Expect({}), Got({})",
+                purchasable.product.id, self.value, purchasable.price.price
             ));
         }
         Validator::new()
@@ -67,8 +67,8 @@ impl Rule for MaxQuantity {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.required_amount > self.value {
             return Validator::from(format!(
-                "MaxQuantity fail:\n\t({},{})",
-                purchasable.product.id, purchasable.product.name
+                "MaxQuantity[{}]: Expect({}), Got({})",
+                purchasable.product.id, self.value, purchasable.required_amount
             ));
         }
         Validator::new()
@@ -90,8 +90,8 @@ impl Rule for MinQuantity {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.required_amount < self.value {
             return Validator::from(format!(
-                "MinQuantity fail:\n\t({},{})",
-                purchasable.product.id, purchasable.product.name
+                "MinQuantity[{}]: Expect({}), Got({})",
+                purchasable.product.id, self.value, purchasable.required_amount
             ));
         }
         Validator::new()
