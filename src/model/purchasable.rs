@@ -45,7 +45,6 @@ impl Purchasable {
         let total_price = self.total_price();
         total_price * (1.0 - self.price.discount)
     }
-    ///run validation rules
     pub fn validate(&self) -> Validator {
         let mut base = Validator::new();
         for rule in &self.rules {
@@ -78,7 +77,7 @@ mod purchasable_test {
         pu.add_rule(&ProductRule::MinQuantity(MinQuantity::from(1)));
         pu.add_rule(&ProductRule::MaxQuantity(MaxQuantity::from(3)));
         let v = pu.validate();
-        assert_eq!(v.stack.is_empty(), true)
+        assert_eq!(v.is_valid(), true)
     }
 
     #[test]
@@ -87,6 +86,6 @@ mod purchasable_test {
         pu.add_rule(&ProductRule::MinQuantity(MinQuantity::from(3)));
         pu.add_rule(&ProductRule::MaxQuantity(MaxQuantity::from(1)));
         let v = pu.validate();
-        assert_eq!(v.stack.is_empty(), false);
+        assert_eq!(v.is_valid(), false);
     }
 }

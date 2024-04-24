@@ -14,6 +14,9 @@ impl Validator {
     pub fn pretty(&self) -> String {
         self.stack.join("\n")
     }
+    pub fn is_valid(&self) -> bool {
+        self.stack.is_empty()
+    }
 }
 
 impl From<&str> for Validator {
