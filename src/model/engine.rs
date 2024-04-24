@@ -1,18 +1,23 @@
-use super::{quotation::Quotation, rule::Rule, validators::Validators};
+use crate::rules::{
+    rule::{QuotationRule, QuotationRuleType},
+    validators::Validators,
+};
+
+use super::quotation::Quotation;
 
 pub struct Engine {
     pub quotation: Quotation,
-    pub rules: Vec<Box<dyn Rule>>,
+    pub rules: Vec<QuotationRuleType>,
 }
 
 impl Engine {
-    pub fn new(quotation: Quotation, rules: Vec<Box<dyn Rule>>) -> Self {
+    pub fn new(quotation: Quotation, rules: Vec<QuotationRuleType>) -> Self {
         Self { quotation, rules }
     }
     pub fn validate(&self) -> Result<(), Validators> {
         let mut validators = Validators::new();
         for rule in &self.rules {
-            let rule_result = rule.apply(&self.quotation);
+            let rule_result = rule.apply_quotation_rule(&self.quotation);
             match rule_result {
                 Ok(()) => continue,
                 Err(inner_validators) => validators.stack.extend(inner_validators.stack),

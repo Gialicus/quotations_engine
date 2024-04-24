@@ -9,6 +9,7 @@ use crate::model::unit::LenghtType;
 use crate::model::unit::UnitOfMeasure;
 use crate::rules::max_quantity::MaxQuantity;
 use crate::rules::min_quantity::MinQuantity;
+use crate::rules::rule::QuotationRuleType;
 
 pub fn mock_product() -> Product {
     let p: Product = Product::new(
@@ -75,8 +76,8 @@ pub fn mock_engine() -> Engine {
     Engine::new(
         mock_quotation(),
         vec![
-            Box::new(MinQuantity { quantity: 3 }),
-            Box::new(MaxQuantity { quantity: 5 }),
+            QuotationRuleType::MinQuantity(MinQuantity { quantity: 3 }),
+            QuotationRuleType::MaxQuantity(MaxQuantity { quantity: 5 }),
         ],
     )
 }

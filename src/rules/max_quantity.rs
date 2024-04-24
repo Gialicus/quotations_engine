@@ -1,11 +1,16 @@
-use crate::model::{quotation::Quotation, rule::Rule, validators::Validators};
+use serde::{Deserialize, Serialize};
 
+use crate::model::quotation::Quotation;
+
+use super::{rule::QuotationRule, validators::Validators};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MaxQuantity {
     pub quantity: u32,
 }
 
-impl Rule for MaxQuantity {
-    fn apply(&self, quotation: &Quotation) -> Result<(), Validators> {
+impl QuotationRule for MaxQuantity {
+    fn apply_quotation_rule(&self, quotation: &Quotation) -> Result<(), Validators> {
         let mut validators = Validators::new();
         for purchasable in &quotation.purchasables {
             if purchasable.required_amount > self.quantity {
@@ -25,8 +30,7 @@ impl Rule for MaxQuantity {
 #[cfg(test)]
 mod test_min_quantity {
     use crate::{
-        model::{engine::Engine, rule::Rule},
-        utils::mock::mock_quotation,
+        model::engine::Engine, rules::rule::QuotationRuleType, utils::mock::mock_quotation,
     };
 
     use super::MaxQuantity;
@@ -34,7 +38,8 @@ mod test_min_quantity {
     #[test]
     fn test_max_quantity_success() {
         let q = mock_quotation();
-        let rules: Vec<Box<dyn Rule>> = vec![Box::new(MaxQuantity { quantity: 5 })];
+        let rules: Vec<QuotationRuleType> =
+            vec![QuotationRuleType::MaxQuantity(MaxQuantity { quantity: 5 })];
         let e = Engine::new(q, rules);
         let result = e.validate();
         assert_eq!(result.is_ok(), true)
@@ -43,7 +48,8 @@ mod test_min_quantity {
     #[test]
     fn test_max_quantity_fail() {
         let q = mock_quotation();
-        let rules: Vec<Box<dyn Rule>> = vec![Box::new(MaxQuantity { quantity: 0 })];
+        let rules: Vec<QuotationRuleType> =
+            vec![QuotationRuleType::MaxQuantity(MaxQuantity { quantity: 0 })];
         let e = Engine::new(q, rules);
         let result = e.validate();
         match result {

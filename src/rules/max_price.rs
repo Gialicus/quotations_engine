@@ -1,11 +1,19 @@
-use crate::model::{quotation::Quotation, rule::Rule, validators::Validators};
+use serde::{Deserialize, Serialize};
 
+use crate::model::{product::Product, quotation::Quotation};
+
+use super::{
+    rule::{ProductRule, QuotationRule},
+    validators::Validators,
+};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MaxPrice {
     pub price: f64,
 }
 
-impl Rule for MaxPrice {
-    fn apply(&self, quotation: &Quotation) -> Result<(), Validators> {
+impl QuotationRule for MaxPrice {
+    fn apply_quotation_rule(&self, quotation: &Quotation) -> Result<(), Validators> {
         let mut validators = Validators::new();
         for purchasable in &quotation.purchasables {
             if purchasable.total_price() > self.price {
@@ -22,11 +30,21 @@ impl Rule for MaxPrice {
     }
 }
 
+impl ProductRule for MaxPrice {
+    fn apply_product_rule(&self, product: &Product) -> Result<(), Validators> {
+        let mut validators = Validators::new();
+        if product.price > self.price {
+            validators.add(format!("{}:{} break MaxPrice", product.id, product.name));
+            return Err(validators);
+        }
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod test_min_quantity {
     use crate::{
-        model::{engine::Engine, rule::Rule},
-        utils::mock::mock_quotation,
+        model::engine::Engine, rules::rule::QuotationRuleType, utils::mock::mock_quotation,
     };
 
     use super::MaxPrice;
@@ -34,7 +52,8 @@ mod test_min_quantity {
     #[test]
     fn test_max_price_success() {
         let q = mock_quotation();
-        let rules: Vec<Box<dyn Rule>> = vec![Box::new(MaxPrice { price: 150.0 })];
+        let rules: Vec<QuotationRuleType> =
+            vec![QuotationRuleType::MaxPrice(MaxPrice { price: 150.0 })];
         let e = Engine::new(q, rules);
         let result = e.validate();
         assert_eq!(result.is_ok(), true)
@@ -43,7 +62,8 @@ mod test_min_quantity {
     #[test]
     fn test_max_price_fail() {
         let q = mock_quotation();
-        let rules: Vec<Box<dyn Rule>> = vec![Box::new(MaxPrice { price: 1.0 })];
+        let rules: Vec<QuotationRuleType> =
+            vec![QuotationRuleType::MaxPrice(MaxPrice { price: 1.0 })];
         let e = Engine::new(q, rules);
         let result = e.validate();
         match result {
