@@ -1,13 +1,11 @@
 use std::fmt::Debug;
 
-use serde::{Deserialize, Serialize};
-
 use super::{quotation::Quotation, validator::Validator};
 pub trait GroupRule: Debug + Clone {
     fn apply(&self, quotation: &Quotation) -> Validator;
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MinProductNumber {
     value: u32,
 }
@@ -32,7 +30,7 @@ impl GroupRule for MinProductNumber {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MaxProductNumber {
     value: u32,
 }
@@ -57,7 +55,7 @@ impl GroupRule for MaxProductNumber {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub enum QuotationRule {
     MinProductNumber(MinProductNumber),
     MaxProductNumber(MaxProductNumber),

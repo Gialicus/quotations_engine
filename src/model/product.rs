@@ -1,6 +1,6 @@
 use super::unit::UnitOfMeasure;
-use serde::{Deserialize, Serialize};
-#[derive(Debug, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Clone)]
 pub struct Product {
     pub id: String,
     pub name: String,

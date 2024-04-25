@@ -1,12 +1,10 @@
-use serde::{Deserialize, Serialize};
-
 use super::{
     group_rule::{GroupRule, QuotationRule},
     purchasable::Purchasable,
     validator::Validator,
 };
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Quotation {
     pub id: String,
     pub purchasables: Vec<Purchasable>,
@@ -57,10 +55,6 @@ impl Quotation {
             .iter()
             .map(|pur| pur.total_package_quantity())
             .sum()
-    }
-
-    pub fn to_json(&self) -> String {
-        serde_json::to_string(self).unwrap_or("{}".to_string())
     }
 
     pub fn add_rule(&mut self, rule: &QuotationRule) {

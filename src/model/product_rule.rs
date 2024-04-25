@@ -1,12 +1,10 @@
-use serde::{Deserialize, Serialize};
-
 use super::{purchasable::Purchasable, validator::Validator};
 
 pub trait Rule: std::fmt::Debug + Clone {
     fn apply(&self, purchasable: &Purchasable) -> Validator;
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MaxPrice {
     value: f64,
 }
@@ -29,7 +27,7 @@ impl Rule for MaxPrice {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MinPrice {
     value: f64,
 }
@@ -52,7 +50,7 @@ impl Rule for MinPrice {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MaxQuantity {
     value: u32,
 }
@@ -75,7 +73,7 @@ impl Rule for MaxQuantity {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MinQuantity {
     value: u32,
 }
@@ -98,7 +96,7 @@ impl Rule for MinQuantity {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub enum ProductRule {
     MaxPrice(MaxPrice),
     MaxQuantity(MaxQuantity),

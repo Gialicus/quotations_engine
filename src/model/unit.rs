@@ -1,21 +1,20 @@
-use serde::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone)]
 pub enum LenghtType {
     Meter,
     Centimeter,
     Millimeter,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone)]
 pub enum VolumeType {
     Liter,
     Centiliter,
     Milliliter,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone)]
 pub enum MassType {
     Kilogram,
     Gram,
@@ -23,7 +22,7 @@ pub enum MassType {
     Milligram,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone)]
 pub enum TimeType {
     Second,
     Minute,
@@ -33,20 +32,20 @@ pub enum TimeType {
     Year,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Lenght {
     pub uom: LenghtType,
     pub lenght: f64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Area {
     pub uom: LenghtType,
     pub x: f64,
     pub y: f64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Footprint {
     pub uom: LenghtType,
     pub x: f64,
@@ -54,19 +53,19 @@ pub struct Footprint {
     pub z: f64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Volume {
     pub uom: VolumeType,
     pub liter: f64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Mass {
     pub uom: MassType,
     pub weight: f64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Time {
     pub uom: TimeType,
     pub value: f64,
@@ -192,7 +191,7 @@ impl fmt::Display for Time {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub enum UnitOfMeasure {
     Lenght(Lenght),
     Area(Area),

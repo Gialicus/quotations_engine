@@ -1,12 +1,10 @@
-use serde::{Deserialize, Serialize};
-
 use super::{
     price::Price,
     product::Product,
     product_rule::{ProductRule, Rule},
     validator::Validator,
 };
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Purchasable {
     pub product: Product,
     pub price: Price,
