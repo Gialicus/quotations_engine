@@ -1,3 +1,5 @@
+use nanoid::nanoid;
+
 use super::{purchasable::Purchasable, validator::Validator};
 
 pub trait Rule: std::fmt::Debug + Clone {
@@ -6,12 +8,16 @@ pub trait Rule: std::fmt::Debug + Clone {
 
 #[derive(Debug, Clone)]
 pub struct MaxPrice {
-    value: f64,
+    pub id: String,
+    pub value: f64,
 }
 
 impl From<f64> for MaxPrice {
     fn from(value: f64) -> Self {
-        Self { value }
+        Self {
+            id: nanoid!(),
+            value,
+        }
     }
 }
 
@@ -29,12 +35,16 @@ impl Rule for MaxPrice {
 
 #[derive(Debug, Clone)]
 pub struct MinPrice {
-    value: f64,
+    pub id: String,
+    pub value: f64,
 }
 
 impl From<f64> for MinPrice {
     fn from(value: f64) -> Self {
-        Self { value }
+        Self {
+            id: nanoid!(),
+            value,
+        }
     }
 }
 
@@ -52,12 +62,16 @@ impl Rule for MinPrice {
 
 #[derive(Debug, Clone)]
 pub struct MaxQuantity {
-    value: u32,
+    pub id: String,
+    pub value: u32,
 }
 
 impl From<u32> for MaxQuantity {
     fn from(value: u32) -> Self {
-        Self { value }
+        Self {
+            id: nanoid!(),
+            value,
+        }
     }
 }
 
@@ -75,12 +89,16 @@ impl Rule for MaxQuantity {
 
 #[derive(Debug, Clone)]
 pub struct MinQuantity {
-    value: u32,
+    pub id: String,
+    pub value: u32,
 }
 
 impl From<u32> for MinQuantity {
     fn from(value: u32) -> Self {
-        Self { value }
+        Self {
+            id: nanoid!(),
+            value,
+        }
     }
 }
 

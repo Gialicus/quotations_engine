@@ -1,3 +1,5 @@
+use nanoid::nanoid;
+
 use super::{
     price::Price,
     product::Product,
@@ -6,6 +8,7 @@ use super::{
 };
 #[derive(Debug, Clone)]
 pub struct Purchasable {
+    pub id: String,
     pub product: Product,
     pub price: Price,
     pub required_amount: u32,
@@ -20,6 +23,7 @@ impl Purchasable {
         rules: Vec<ProductRule>,
     ) -> Self {
         Purchasable {
+            id: nanoid!(),
             product,
             price,
             required_amount,

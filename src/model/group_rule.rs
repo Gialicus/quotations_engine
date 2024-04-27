@@ -1,5 +1,7 @@
 use std::fmt::Debug;
 
+use nanoid::nanoid;
+
 use super::{quotation::Quotation, validator::Validator};
 pub trait GroupRule: Debug + Clone {
     fn apply(&self, quotation: &Quotation) -> Validator;
@@ -7,12 +9,16 @@ pub trait GroupRule: Debug + Clone {
 
 #[derive(Debug, Clone)]
 pub struct MinProductNumber {
-    value: u32,
+    pub id: String,
+    pub value: u32,
 }
 
 impl From<u32> for MinProductNumber {
     fn from(value: u32) -> Self {
-        Self { value }
+        Self {
+            id: nanoid!(),
+            value,
+        }
     }
 }
 
@@ -32,12 +38,16 @@ impl GroupRule for MinProductNumber {
 
 #[derive(Debug, Clone)]
 pub struct MaxProductNumber {
-    value: u32,
+    pub id: String,
+    pub value: u32,
 }
 
 impl From<u32> for MaxProductNumber {
     fn from(value: u32) -> Self {
-        Self { value }
+        Self {
+            id: nanoid!(),
+            value,
+        }
     }
 }
 

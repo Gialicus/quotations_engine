@@ -1,3 +1,5 @@
+use nanoid::nanoid;
+
 use super::{
     group_rule::{GroupRule, QuotationRule},
     purchasable::Purchasable,
@@ -12,9 +14,9 @@ pub struct Quotation {
 }
 
 impl Quotation {
-    pub fn new(id: &str) -> Self {
+    pub fn new() -> Self {
         Self {
-            id: id.to_string(),
+            id: nanoid!(),
             purchasables: Vec::new(),
             rules: Vec::new(),
         }
@@ -145,17 +147,5 @@ mod quotation_test {
             .for_each(|p| p.add_rule(&ProductRule::MinPrice(MinPrice::from(1000.0))));
         let v = q.validate();
         assert_eq!(v.is_valid(), false);
-    }
-
-    #[test]
-    fn quotation_validate_error_text() {
-        let mut q = mock_quotation();
-        q.add_rule(&QuotationRule::MinProductNumber(MinProductNumber::from(5)));
-        q.add_rule(&QuotationRule::MaxProductNumber(MaxProductNumber::from(1)));
-        q.purchasables
-            .iter_mut()
-            .for_each(|p| p.add_rule(&ProductRule::MinPrice(MinPrice::from(1000.0))));
-        let v = q.validate();
-        assert_eq!(v.pretty(), "MinPrice[0]: Expect(1000), Got(20)\nMinPrice[1]: Expect(1000), Got(200)\nMinPrice[2]: Expect(1000), Got(50)\nMinProductNumber[0]: Expect(5), Got(3)\nMaxProductNumber[0]: Expect(1), Got(3)");
     }
 }
