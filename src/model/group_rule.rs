@@ -1,7 +1,5 @@
 use std::fmt::Debug;
 
-use nanoid::nanoid;
-
 use super::{quotation::Quotation, validator::Validator};
 pub trait GroupRule: Debug + Clone {
     fn apply(&self, quotation: &Quotation) -> Validator;
@@ -9,16 +7,12 @@ pub trait GroupRule: Debug + Clone {
 
 #[derive(Debug, Clone)]
 pub struct MinProductNumber {
-    pub id: String,
     pub value: u32,
 }
 
 impl From<u32> for MinProductNumber {
     fn from(value: u32) -> Self {
-        Self {
-            id: nanoid!(),
-            value,
-        }
+        Self { value }
     }
 }
 
@@ -26,8 +20,7 @@ impl GroupRule for MinProductNumber {
     fn apply(&self, quotation: &Quotation) -> Validator {
         if quotation.purchasables.len() < self.value as usize {
             return Validator::from(format!(
-                "MinProductNumber[{}]: Expect({}), Got({})",
-                quotation.id,
+                "MinProductNumber: Expect({}), Got({})",
                 self.value,
                 quotation.purchasables.len()
             ));
@@ -38,16 +31,12 @@ impl GroupRule for MinProductNumber {
 
 #[derive(Debug, Clone)]
 pub struct MaxProductNumber {
-    pub id: String,
     pub value: u32,
 }
 
 impl From<u32> for MaxProductNumber {
     fn from(value: u32) -> Self {
-        Self {
-            id: nanoid!(),
-            value,
-        }
+        Self { value }
     }
 }
 
@@ -55,8 +44,7 @@ impl GroupRule for MaxProductNumber {
     fn apply(&self, quotation: &Quotation) -> Validator {
         if quotation.purchasables.len() > self.value as usize {
             return Validator::from(format!(
-                "MaxProductNumber[{}]: Expect({}), Got({})",
-                quotation.id,
+                "MaxProductNumber: Expect({}), Got({})",
                 self.value,
                 quotation.purchasables.len()
             ));

@@ -1,5 +1,3 @@
-use nanoid::nanoid;
-
 use super::{purchasable::Purchasable, validator::Validator};
 
 pub trait Rule: std::fmt::Debug + Clone {
@@ -8,16 +6,12 @@ pub trait Rule: std::fmt::Debug + Clone {
 
 #[derive(Debug, Clone)]
 pub struct MaxPrice {
-    pub id: String,
     pub value: f64,
 }
 
 impl From<f64> for MaxPrice {
     fn from(value: f64) -> Self {
-        Self {
-            id: nanoid!(),
-            value,
-        }
+        Self { value }
     }
 }
 
@@ -25,8 +19,8 @@ impl Rule for MaxPrice {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.price.price > self.value {
             return Validator::from(format!(
-                "MaxPrice[{}]: Expect({}), Got({})",
-                purchasable.product.id, self.value, purchasable.price.price
+                "MaxPrice: Expect({}), Got({})",
+                self.value, purchasable.price.price
             ));
         }
         Validator::new()
@@ -35,16 +29,12 @@ impl Rule for MaxPrice {
 
 #[derive(Debug, Clone)]
 pub struct MinPrice {
-    pub id: String,
     pub value: f64,
 }
 
 impl From<f64> for MinPrice {
     fn from(value: f64) -> Self {
-        Self {
-            id: nanoid!(),
-            value,
-        }
+        Self { value }
     }
 }
 
@@ -52,8 +42,8 @@ impl Rule for MinPrice {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.price.price < self.value {
             return Validator::from(format!(
-                "MinPrice[{}]: Expect({}), Got({})",
-                purchasable.product.id, self.value, purchasable.price.price
+                "MinPrice: Expect({}), Got({})",
+                self.value, purchasable.price.price
             ));
         }
         Validator::new()
@@ -62,16 +52,12 @@ impl Rule for MinPrice {
 
 #[derive(Debug, Clone)]
 pub struct MaxQuantity {
-    pub id: String,
     pub value: u32,
 }
 
 impl From<u32> for MaxQuantity {
     fn from(value: u32) -> Self {
-        Self {
-            id: nanoid!(),
-            value,
-        }
+        Self { value }
     }
 }
 
@@ -79,8 +65,8 @@ impl Rule for MaxQuantity {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.required_amount > self.value {
             return Validator::from(format!(
-                "MaxQuantity[{}]: Expect({}), Got({})",
-                purchasable.product.id, self.value, purchasable.required_amount
+                "MaxQuantity: Expect({}), Got({})",
+                self.value, purchasable.required_amount
             ));
         }
         Validator::new()
@@ -89,16 +75,12 @@ impl Rule for MaxQuantity {
 
 #[derive(Debug, Clone)]
 pub struct MinQuantity {
-    pub id: String,
     pub value: u32,
 }
 
 impl From<u32> for MinQuantity {
     fn from(value: u32) -> Self {
-        Self {
-            id: nanoid!(),
-            value,
-        }
+        Self { value }
     }
 }
 
@@ -106,8 +88,8 @@ impl Rule for MinQuantity {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
         if purchasable.required_amount < self.value {
             return Validator::from(format!(
-                "MinQuantity[{}]: Expect({}), Got({})",
-                purchasable.product.id, self.value, purchasable.required_amount
+                "MinQuantity: Expect({}), Got({})",
+                self.value, purchasable.required_amount
             ));
         }
         Validator::new()

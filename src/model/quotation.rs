@@ -1,5 +1,3 @@
-use nanoid::nanoid;
-
 use super::{
     group_rule::{GroupRule, QuotationRule},
     purchasable::Purchasable,
@@ -8,7 +6,6 @@ use super::{
 
 #[derive(Debug, Clone)]
 pub struct Quotation {
-    pub id: String,
     pub purchasables: Vec<Purchasable>,
     pub rules: Vec<QuotationRule>,
 }
@@ -16,7 +13,6 @@ pub struct Quotation {
 impl Quotation {
     pub fn new() -> Self {
         Self {
-            id: nanoid!(),
             purchasables: Vec::new(),
             rules: Vec::new(),
         }
