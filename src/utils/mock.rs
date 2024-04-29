@@ -14,6 +14,7 @@ pub fn mock_product() -> Product {
         "cavi usb in rame lunghi 3 metri",
         5.0,
         UnitOfMeasure::Lenght(Lenght::new(LenghtType::Meter, 3.0)),
+        Price::new(10.0, 0.2, 0),
     );
     product
 }
@@ -24,10 +25,10 @@ pub fn mock_purchasable() -> Purchasable {
         "cavi usb in rame lunghi 15 centimetri",
         5.0,
         UnitOfMeasure::Lenght(Lenght::new(LenghtType::Centimeter, 15.0)),
+        Price::new(10.0, 0.5, 0),
     );
-    let price = Price::new(10.0, 0.5, 0);
     //20 /S 10
-    let pu: Purchasable = Purchasable::new(product, price, 2, Vec::new());
+    let pu: Purchasable = Purchasable::new(product, 2, Vec::new());
     pu
 }
 
@@ -37,25 +38,28 @@ pub fn mock_quotation() -> Quotation {
         "cavi usb in rame lunghi 10 centimetri",
         10.0,
         UnitOfMeasure::Area(Area::new(LenghtType::Centimeter, 10.0, 10.0)),
+        Price::new(20.0, 0.5, 0),
     );
     let p2 = Product::new(
         "box doccia",
         "box doccia 1x1 m",
         1.0,
         UnitOfMeasure::Area(Area::new(LenghtType::Centimeter, 100.0, 100.0)),
+        Price::new(200.0, 0.5, 0),
     );
     let p3 = Product::new(
         "rubinetti vintage",
         "cose da bagno",
         4.0,
         UnitOfMeasure::Footprint(Footprint::new(LenghtType::Centimeter, 10., 25.0, 5.0)),
+        Price::new(50.0, 0.5, 0),
     );
     //40 /S 20
-    let pu: Purchasable = Purchasable::new(p, Price::new(20.0, 0.5, 0), 2, Vec::new());
+    let pu: Purchasable = Purchasable::new(p, 2, Vec::new());
     //200 /S 100
-    let pu2: Purchasable = Purchasable::new(p2, Price::new(200.0, 0.5, 0), 1, Vec::new());
+    let pu2: Purchasable = Purchasable::new(p2, 1, Vec::new());
     //200 /S 100
-    let pu3: Purchasable = Purchasable::new(p3, Price::new(50.0, 0.5, 0), 4, Vec::new());
+    let pu3: Purchasable = Purchasable::new(p3, 4, Vec::new());
     let mut quo: Quotation = Quotation::new();
     quo.add_item(pu);
     quo.add_item(pu2);

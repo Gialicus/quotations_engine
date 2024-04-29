@@ -1,5 +1,4 @@
 use super::{
-    price::Price,
     product::Product,
     product_rule::{ProductRule, Rule},
     validator::Validator,
@@ -7,21 +6,14 @@ use super::{
 #[derive(Debug, Clone)]
 pub struct Purchasable {
     pub product: Product,
-    pub price: Price,
     pub required_amount: u32,
     pub rules: Vec<ProductRule>,
 }
 
 impl Purchasable {
-    pub fn new(
-        product: Product,
-        price: Price,
-        required_amount: u32,
-        rules: Vec<ProductRule>,
-    ) -> Self {
+    pub fn new(product: Product, required_amount: u32, rules: Vec<ProductRule>) -> Self {
         Purchasable {
             product,
-            price,
             required_amount,
             rules,
         }
@@ -36,12 +28,12 @@ impl Purchasable {
     }
     ///required_amount * price.price
     pub fn total_price(&self) -> f64 {
-        self.required_amount as f64 * self.price.price
+        self.required_amount as f64 * self.product.price.price
     }
     ///total_price() * (1.0 - self.price.discount)
     pub fn total_discounted(&self) -> f64 {
         let total_price = self.total_price();
-        total_price * (1.0 - self.price.discount)
+        total_price * (1.0 - self.product.price.discount)
     }
     pub fn validate(&self) -> Validator {
         let mut base = Validator::new();
@@ -53,22 +45,20 @@ impl Purchasable {
     }
 }
 
-impl From<(Product, Price)> for Purchasable {
-    fn from(value: (Product, Price)) -> Self {
+impl From<Product> for Purchasable {
+    fn from(value: Product) -> Self {
         Self {
-            product: value.0,
-            price: value.1,
+            product: value,
             required_amount: 1,
             rules: Vec::new(),
         }
     }
 }
-impl From<(Product, Price, u32)> for Purchasable {
-    fn from(value: (Product, Price, u32)) -> Self {
+impl From<(Product, u32)> for Purchasable {
+    fn from(value: (Product, u32)) -> Self {
         Self {
             product: value.0,
-            price: value.1,
-            required_amount: value.2,
+            required_amount: value.1,
             rules: Vec::new(),
         }
     }

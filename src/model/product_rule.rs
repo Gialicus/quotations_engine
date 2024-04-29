@@ -17,10 +17,10 @@ impl From<f64> for MaxPrice {
 
 impl Rule for MaxPrice {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
-        if purchasable.price.price > self.value {
+        if purchasable.product.price.price > self.value {
             return Validator::from(format!(
                 "MaxPrice: Expect({}), Got({})",
-                self.value, purchasable.price.price
+                self.value, purchasable.product.price.price
             ));
         }
         Validator::new()
@@ -40,10 +40,10 @@ impl From<f64> for MinPrice {
 
 impl Rule for MinPrice {
     fn apply(&self, purchasable: &Purchasable) -> Validator {
-        if purchasable.price.price < self.value {
+        if purchasable.product.price.price < self.value {
             return Validator::from(format!(
                 "MinPrice: Expect({}), Got({})",
-                self.value, purchasable.price.price
+                self.value, purchasable.product.price.price
             ));
         }
         Validator::new()
