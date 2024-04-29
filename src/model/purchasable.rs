@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use nanoid::nanoid;
 
 use super::{
     price::Price,
@@ -6,8 +6,9 @@ use super::{
     product_rule::{ProductRule, Rule},
     validator::Validator,
 };
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct Purchasable {
+    pub id: String,
     pub product: Product,
     pub price: Price,
     pub required_amount: u32,
@@ -22,6 +23,7 @@ impl Purchasable {
         rules: Vec<ProductRule>,
     ) -> Self {
         Purchasable {
+            id: nanoid!(),
             product,
             price,
             required_amount,
